@@ -7,7 +7,10 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    metaclass (0.0.4)
     mixlib-cli (1.4.0)
+    mocha (1.0.0)
+      metaclass (~> 0.0.1)
     rake (10.1.1)
 
 PLATFORMS
@@ -16,4 +19,5 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.5)
   logginator!
+  mocha
   rake
