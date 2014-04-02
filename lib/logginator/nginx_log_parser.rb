@@ -1,5 +1,3 @@
-require 'socket'
-
 class Logginator::NginxLogParser
 
   MATCHER = /#{[
@@ -49,7 +47,7 @@ class Logginator::NginxLogParser
       req_time = data[:request_time].to_f
       self.total_request_time += req_time
       self.min = get_min(min, req_time)
-      self.max = get_max(min, req_time)
+      self.max = get_max(max, req_time)
 
       upstream_req_time = data[:upstream_time].to_f
       self.total_upstream_time += upstream_req_time
