@@ -39,6 +39,24 @@ class NginxLogParserTest < MiniTest::Unit::TestCase
     assert_match(/requests.max\t0.077\t\d*/, stats)
   end
 
+
+  def test_parsing_lines_calculates_request_upstream_stats_request_average
+    stats = parser(log_lines).get_stats
+    assert_match(/requests.upstream_average\t0.031\t\d*/, stats)
+  end
+
+
+  def test_parsing_lines_calculates_request_upstream_stats_request_min
+    stats = parser(log_lines).get_stats
+    assert_match(/requests.upstream_min\t0.007\t\d*/, stats)
+  end
+
+
+  def test_parsing_lines_calculates_request_upstream_stats_request_max
+    stats = parser(log_lines).get_stats
+    assert_match(/requests.upstream_max\t0.067\t\d*/, stats)
+  end
+
   protected
 
     attr_accessor :scheme

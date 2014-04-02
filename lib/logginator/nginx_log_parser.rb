@@ -8,7 +8,8 @@ class Logginator::NginxLogParser
     '(?<upstream_time>\d*\.?\d*) .$'
   ].join('')}/
 
-  attr_accessor :request_count, :total_request_time, :min, :max
+  attr_accessor :request_count, :total_request_time, :min, :max,
+    :total_upstream_time, :upstream_min, :upstream_max
 
 
   def initialize(scheme = nil)
@@ -20,8 +21,11 @@ class Logginator::NginxLogParser
   def reset
     @request_count = 0
     @total_request_time = 0.0
+    @total_upstream_time = 0.0
     @min = nil
     @max = nil
+    @upstream_min = nil
+    @upstream_max = nil
   end
 
 
@@ -40,26 +44,49 @@ class Logginator::NginxLogParser
   protected
 
     def gather_stats(data)
-      req_time = data[:request_time].to_f
       self.request_count += 1
+
+      req_time = data[:request_time].to_f
       self.total_request_time += req_time
-      self.min = (min && min < req_time) ? min : req_time
-      self.max = (max && max > req_time) ? max : req_time
+      self.min = get_min(min, req_time)
+      self.max = get_max(min, req_time)
+
+      upstream_req_time = data[:upstream_time].to_f
+      self.total_upstream_time += upstream_req_time
+      self.upstream_min = get_min(upstream_min, upstream_req_time)
+      self.upstream_max = get_max(upstream_max, upstream_req_time)
     end
 
-    def stats_data
-      average = if (request_count == 0)
-        0
-      else
-        total_request_time.fdiv(request_count).round(5)
-      end
 
+    def get_min(min, new_val)
+      (min && min < new_val) ? min : new_val
+    end
+
+
+    def get_max(max, new_val)
+      (max && max > new_val) ? max : new_val
+    end
+
+
+    def stats_data
       {
         'count' => request_count,
-        'average' => average,
+        'average' => calculate_average(total_request_time),
         'min' => min || 0,
-        'max' => max || 0
+        'max' => max || 0,
+        'upstream_average' => calculate_average(total_upstream_time),
+        'upstream_min' => upstream_min || 0,
+        'upstream_max' => upstream_max || 0
       }
+    end
+
+
+    def calculate_average(total_time)
+      if (request_count == 0)
+        0
+      else
+        total_time.fdiv(request_count).round(5)
+      end
     end
 
 end
