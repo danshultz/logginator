@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Dan Shultz"]
   spec.email         = ["das0118@gmail.com"]
   spec.summary       = %q{Command line tool to parse logs and roll counts}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/danshultz/logginator"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "mixlib-cli"
+  spec.add_dependency "mixlib-cli", "~>1.4.0"
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
