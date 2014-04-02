@@ -18,6 +18,10 @@ Or install it yourself as:
 
 ## Usage
 
+### Output data to the console on 2 second intervals
+
+```logginator --file nginx_log_sample.log --flush 2```
+
 ### Send data directly to graphite
 
 ```logginator --file nginx_log_sample.log --flush 10 --sender tcp --port 2003 --address 192.168.23.202```
