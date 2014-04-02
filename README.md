@@ -18,7 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Send data directly to graphite
+
+```logginator --file nginx_log_sample.log --flush 10 --sender tcp --port 2003 --address 192.168.23.202```
 
 ## Contributing
 
