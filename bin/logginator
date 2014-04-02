@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'logginator'
+
+Logginator::CLI.new(ARGV).run!
