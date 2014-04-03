@@ -55,7 +55,7 @@ class Logginator::CLI
 
 
   def run!
-    parser = Logginator::NginxLogParser.new
+    parser = Logginator::LogParser::Nginx.new
     context = Logginator::Context.new(parser, build_sender, tail_command)
 
     opts = { :flush_interval => config[:flush_interval] }

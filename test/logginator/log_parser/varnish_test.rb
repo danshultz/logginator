@@ -67,7 +67,7 @@ class VarnishLogParserTest < MiniTest::Unit::TestCase
     attr_accessor :scheme
 
     def parser(log_lines=[])
-      @parser ||= Logginator::VarnishLogParser.new(scheme).tap { |parser|
+      @parser ||= Logginator::LogParser::Varnish.new(scheme).tap { |parser|
         log_lines.each { |line|
           parser.parse_line(line)
         }

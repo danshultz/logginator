@@ -62,7 +62,7 @@ class NginxLogParserTest < MiniTest::Unit::TestCase
     attr_accessor :scheme
 
     def parser(log_lines=[])
-      @parser ||= Logginator::NginxLogParser.new(scheme).tap { |parser|
+      @parser ||= Logginator::LogParser::Nginx.new(scheme).tap { |parser|
         log_lines.each { |line|
           parser.parse_line(line)
         }

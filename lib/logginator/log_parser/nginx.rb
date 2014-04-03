@@ -1,4 +1,4 @@
-class Logginator::NginxLogParser
+class Logginator::LogParser::Nginx
 
   MATCHER = /#{[
     '^.*?',

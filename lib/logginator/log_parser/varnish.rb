@@ -1,4 +1,4 @@
-class Logginator::VarnishLogParser
+class Logginator::LogParser::Varnish
 
   MATCHER = /#{[
     '(\d* ReqEnd\s*[a-z]\s)',
