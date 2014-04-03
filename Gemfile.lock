@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     logginator (0.0.1)
-      mixlib-cli
+      mixlib-cli (~> 1.4.0)
 
 GEM
   remote: https://rubygems.org/
