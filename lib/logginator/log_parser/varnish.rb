@@ -86,8 +86,8 @@ class Logginator::LogParser::Varnish
         'count' => request_count,
 
         'average' => calculate_average(total_request_time),
-        'min' => min || 0,
-        'max' => max || 0,
+        'min' => f_to_s(min) || 0,
+        'max' => f_to_s(max) || 0,
 
         'upstream_average' => calculate_average(total_upstream_time),
         'upstream_min' => f_to_s(upstream_min) || 0,
