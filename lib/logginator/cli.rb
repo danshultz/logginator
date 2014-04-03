@@ -54,6 +54,9 @@ class Logginator::CLI
 
     opts = { :flush_interval => config[:flush_interval] }
     supervisor = Logginator::Supervisor.new(context, opts)
+    %w(TERM INT).each { |s|
+      Signal.trap(s) { supervisor.abort! }
+    }
     supervisor.run
   end
 
