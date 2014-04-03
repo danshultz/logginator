@@ -20,11 +20,11 @@ Or install it yourself as:
 
 ### Output data to the console on 2 second intervals
 
-```logginator --file nginx_log_sample.log --flush 2```
+```logginator nginx --flush 2 --tail-command 'tail -F nginx_log_sample.log'```
 
 ### Send data directly to graphite
 
-```logginator --file nginx_log_sample.log --flush 10 --sender tcp --port 2003 --address 192.168.23.202```
+```logginator nginx --flush 10 --tail-command 'tail -F nginx_log_sample.log' --sender tcp --port 2003 --address 192.168.23.202```
 
 ## Contributing
 
