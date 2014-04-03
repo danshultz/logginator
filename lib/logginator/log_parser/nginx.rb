@@ -35,7 +35,7 @@ class Logginator::LogParser::Nginx
   def get_stats
     timestamp = Time.now.to_i
     stats_data.reduce('') { |o, kv|
-      o << "#{@scheme}.requests.#{kv[0]}\t#{kv[1]}\t#{timestamp}\n"
+      o << "#{@scheme}.nginx.requests.#{kv[0]}\t#{kv[1]}\t#{timestamp}\n"
     }
   end
 

@@ -4,7 +4,7 @@ class NginxLogParserTest < MiniTest::Unit::TestCase
 
   def test_it_prepends_the_default_scheme
     parser.get_stats.split("\n").each { |stat|
-      assert_match(/#{Socket.gethostname}.requests.*?\t\d*\t\d*/, stat)
+      assert_match(/#{Socket.gethostname}.nginx.requests.*?\t\d*\t\d*/, stat)
     }
   end
 
