@@ -90,12 +90,12 @@ class Logginator::LogParser::Varnish
         'max' => max || 0,
 
         'upstream_average' => calculate_average(total_upstream_time),
-        'upstream_min' => '%.9f' % upstream_min || 0,
-        'upstream_max' => '%.9f' % upstream_max || 0,
+        'upstream_min' => f_to_s(upstream_min) || 0,
+        'upstream_max' => f_to_s(upstream_max) || 0,
 
         'queue_average' => calculate_average(total_queue_time),
-        'queue_min' => '%.9f' % queue_min || 0,
-        'queue_max' => '%.9f' % queue_max || 0
+        'queue_min' => f_to_s(queue_min) || 0,
+        'queue_max' => f_to_s(queue_max) || 0
       }
     end
 
@@ -104,8 +104,13 @@ class Logginator::LogParser::Varnish
       if (request_count == 0)
         0
       else
-        '%.9f' % total_time.fdiv(request_count).round(5)
+        f_to_s(total_time.fdiv(request_count).round(5))
       end
+    end
+
+
+    def f_to_s(f)
+      '%.9f' % f if f
     end
 
 end

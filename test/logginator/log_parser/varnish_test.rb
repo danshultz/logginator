@@ -2,6 +2,19 @@ require 'test_helper'
 
 class VarnishLogParserTest < MiniTest::Unit::TestCase
 
+  def test_it_prepends_the_default_scheme
+    parser.get_stats.split("\n").each { |stat|
+      assert_match(/#{Socket.gethostname}.requests.*?\t\d*\t\d*/, stat)
+    }
+  end
+
+
+  def test_it_provides_all_stats_as_0_when_no_lines
+    parser.get_stats.split("\n").each { |stat|
+      assert_match(/requests.*?\t0\t\d*/, stat)
+    }
+  end
+
 
   def test_parsing_lines_calculates_request_stats_request_count
     stats = parser(log_lines).get_stats
