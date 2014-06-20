@@ -1,9 +1,16 @@
 class Logginator::LogParser::Nginx
+  MATCHERS = Logginator::LogParser::Matchers
 
   MATCHER = /#{[
-    '^.*?',
-    '(?<request_time>\d*\.?\d*) ',
-    '(?<upstream_time>\d*\.?\d*) .$'
+    "^(?<host>#{MATCHERS::HOSTNAME}) -- ",
+    "(?<remote_address>#{MATCHERS::IPORHOST}) - ",
+    "(?<remote_user>#{MATCHERS::USERNAME})? ",
+    "\\[(?<time_local>#{MATCHERS::HTTPDATE})\\] ",
+    '(?<request>".*") ',
+    "(?<status_code>#{MATCHERS::INT}) ",
+    '.*?',
+    "(?<request_time>#{MATCHERS::NUMBER}) ",
+    "(?<upstream_time>#{MATCHERS::NUMBER}) .$"
   ].join('')}/
 
   attr_accessor :request_count, :total_request_time, :min, :max,
