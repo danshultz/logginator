@@ -14,7 +14,7 @@ class Logginator::LogParser::Nginx
   ].join('')}/
 
   attr_accessor :request_count, :total_request_time, :min, :max,
-    :total_upstream_time, :upstream_min, :upstream_max
+    :total_upstream_time, :upstream_min, :upstream_max, :response_codes
 
 
   def initialize(scheme = nil)
@@ -31,6 +31,7 @@ class Logginator::LogParser::Nginx
     @max = nil
     @upstream_min = nil
     @upstream_max = nil
+    @response_codes = {}
   end
 
 
@@ -50,6 +51,11 @@ class Logginator::LogParser::Nginx
 
     def gather_stats(data)
       self.request_count += 1
+
+      if status_code = data[:status_code]
+        response_codes[status_code] ||= 0
+        response_codes[status_code] += 1
+      end
 
       req_time = data[:request_time].to_f
       self.total_request_time += req_time
@@ -74,6 +80,10 @@ class Logginator::LogParser::Nginx
 
 
     def stats_data
+      response_code_data = response_codes.reduce({}) { |accum, (k,v)|
+        accum.tap { accum["status_codes.#{k}"] = v }
+      }
+
       {
         'count' => request_count,
         'average' => calculate_average(total_request_time),
@@ -82,7 +92,7 @@ class Logginator::LogParser::Nginx
         'upstream_average' => calculate_average(total_upstream_time),
         'upstream_min' => upstream_min || 0,
         'upstream_max' => upstream_max || 0
-      }
+      }.merge(response_code_data)
     end
 
 
